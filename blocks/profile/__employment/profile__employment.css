@@ -1,0 +1,16 @@
+.profile__employment {
+  margin: 0;
+  padding-top: 8px;
+  font-size: 18px;
+  line-height: 22px;
+  grid-area: employment;
+}
+
+@media screen and (max-width: 767px) {
+  .profile__employment {
+    text-align: center;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 0;
+  }
+}

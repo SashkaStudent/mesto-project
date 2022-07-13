@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./pages/index.css" />
+    <title>Место</title>
+  </head>
+  <body class="content">
+    <header class="header">
+      <img
+        src="./images/mesto-logo.svg"
+        alt="Логотип Место."
+        class="header__logo"
+      />
+      <hr class="header__line" />
+    </header>
+
+    <main class="page">
+      <section class="profile">
+        <img
+          class="profile__avatar"
+          src="./images/avatar.png"
+          alt="Аватар пользователя."
+        />
+        <div class="profile__info">
+          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <button class="profile__edit-button" aria-label="Редактировать"></button>
+          <p class="profile__employment">Исследователь океана</p>
+        </div>
+        <button class="profile__add-button" aria-label="Добавить"></button>
+      </section>
+
+      <section class="elements">
+        <ul class="elements__list">
+          <li class="element">
+            <img
+              src="./images/elements/karachaevsk.png"
+              alt="Ветхое, кирпичное строение."
+              class="element__image"
+            />
+            <div class="element__title-container">
+              <h2 class="element__title">Карачаевск</h2>
+              <button class="element__like-button" aria-label="Поставить лайк."></button>
+            </div>
+          </li>
+          <li class="element">
+            <img
+              src="./images/elements/elbrus.png"
+              alt="Вид на гору Эльбрус."
+              class="element__image"
+            />
+            <div class="element__title-container">
+              <h2 class="element__title">Гора Эльбрус</h2>
+              <button class="element__like-button" aria-label="Поставить лайк."></button>
+            </div>
+          </li>
+          <li class="element">
+            <img
+              src="./images/elements/dombai.png"
+              alt="Вид на Домбай."
+              class="element__image"
+            />
+            <div class="element__title-container">
+              <h2 class="element__title">Домбай</h2>
+              <button class="element__like-button" aria-label="Поставить лайк."></button>
+            </div>
+          </li>
+          <li class="element">
+            <img
+              src="./images/elements/elbrus.png"
+              alt="Вид на гору Эльбрус."
+              class="element__image"
+            />
+            <div class="element__title-container">
+              <h2 class="element__title">Гора Эльбрус</h2>
+              <button class="element__like-button" aria-label="Поставить лайк."></button>
+            </div>
+          </li>
+          <li class="element">
+            <img
+              src="./images/elements/dombai.png"
+              alt="Вид на Домбай."
+              class="element__image"
+            />
+            <div class="element__title-container">
+              <h2 class="element__title">Домбай</h2>
+              <button class="element__like-button" aria-label="Поставить лайк."></button>
+            </div>
+          </li>
+          <li class="element">
+            <img
+              src="./images/elements/karachaevsk.png"
+              alt="Ветхое, кирпичное строение."
+              class="element__image"
+            />
+            <div class="element__title-container">
+              <h2 class="element__title">Карачаево-Черкессия</h2>
+              <button class="element__like-button" aria-label="Поставить лайк."></button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    
+    <footer class="footer">
+      <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
+    </footer>
+
+    <div class="popup">
+      <div class="popup__window">
+        <button class="popup__close-button" type="button" aria-label="Закрыть окно редактирования."></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form name="editForm" class="popup__form">
+          <input type="text" name="inputName" placeholder="Имя" class="popup__input">
+          <input type="text" name="inputEmployment" placeholder="Занятие" class="popup__input">
+          <button type="submit" class="popup__submit-button" aria-label="Сохранить изменения.">Сохранить</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

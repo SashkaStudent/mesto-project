@@ -1,17 +1,17 @@
-# Проект: Место
+# Mesto
 
-### Обзор
+## What is it
 
-* Figma
-* Картинки
+Completed as part of the third sprint of the Yandex.Practicum course.
 
-**Figma**
+The project implements an adaptive layout for the most common screen resolutions, and a modal profile editing window.
+The project is a preparation for the next section of the java scripting course.
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+## Used
 
-**Картинки**
+HTML, CSS
 
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
 
-Удачи!
+## Github pages
+
+https://sashkastudent.github.io/

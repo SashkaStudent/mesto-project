@@ -1,0 +1,19 @@
+.header {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 41px;
+  justify-content: flex-start;
+  margin: 0 auto;
+  max-width: 880px;
+  padding-top: 45px;
+  width: calc(100% - 68px);
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    gap: 31px;
+    padding-top: 28px;
+    width: 100%;
+  }
+}
