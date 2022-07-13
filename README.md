@@ -14,4 +14,4 @@ HTML, CSS
 
 ## Github pages
 
-https://sashkastudent.github.io/
+https://sashkastudent.github.io/mesto-project/
