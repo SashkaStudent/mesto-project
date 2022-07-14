@@ -4,10 +4,17 @@
   font-size: 18px;
   line-height: 22px;
   grid-area: employment;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  max-width: 310px;
+  white-space: nowrap;
+
 }
 
 @media screen and (max-width: 767px) {
   .profile__employment {
+    max-width: 210px;
     text-align: center;
     font-size: 14px;
     line-height: 17px;

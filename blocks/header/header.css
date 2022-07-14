@@ -2,12 +2,13 @@
   align-items: flex-start;
   display: flex;
   flex-direction: column;
-  gap: 41px;
   justify-content: flex-start;
   margin: 0 auto;
   max-width: 880px;
   padding-top: 45px;
   width: calc(100% - 68px);
+  border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+  padding-bottom: 41px;
 }
 
 @media screen and (max-width: 767px) {
