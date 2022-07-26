@@ -1,0 +1,11 @@
+.popup__figure-caption {
+  padding-top: 10px;
+  color: white;
+  display: table-caption; 
+  caption-side: bottom;
+  max-width: 75vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  
+}

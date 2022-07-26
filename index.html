@@ -25,15 +25,26 @@
         />
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
-          <button class="profile__edit-button" id="editProfileButton" type="button" aria-label="Редактировать"></button>
+          <button
+            class="profile__edit-button"
+            id="editProfileButton"
+            type="button"
+            aria-label="Редактировать"
+          ></button>
           <p class="profile__employment">Исследователь океана</p>
         </div>
-        <button class="profile__add-button" type="button" aria-label="Добавить"></button>
+        <button
+          class="profile__add-button"
+          id="addNewItemButton"
+          type="button"
+          aria-label="Добавить"
+        ></button>
       </section>
 
       <section class="elements">
         <ul class="elements__list">
-          <li class="element">
+          <!-- <li class="element">
+            <button class="element__delete-button"></button>
             <img
               src="./images/elements/karachaevsk.jpg"
               alt="Ветхое, кирпичное строение."
@@ -41,10 +52,15 @@
             />
             <div class="element__title-container">
               <h2 class="element__title">Карачаевск</h2>
-              <button class="element__like-button" type="button" aria-label="Поставить лайк."></button>
+              <button
+                class="element__like-button"
+                type="button"
+                aria-label="Поставить лайк."
+              ></button>
             </div>
           </li>
           <li class="element">
+            <button class="element__delete-button"></button>
             <img
               src="./images/elements/elbrus.jpg"
               alt="Вид на гору Эльбрус."
@@ -52,10 +68,15 @@
             />
             <div class="element__title-container">
               <h2 class="element__title">Гора Эльбрус</h2>
-              <button class="element__like-button" type="button" aria-label="Поставить лайк."></button>
+              <button
+                class="element__like-button"
+                type="button"
+                aria-label="Поставить лайк."
+              ></button>
             </div>
           </li>
           <li class="element">
+            <button class="element__delete-button"></button>
             <img
               src="./images/elements/dombai.jpg"
               alt="Вид на Домбай."
@@ -63,21 +84,32 @@
             />
             <div class="element__title-container">
               <h2 class="element__title">Домбай</h2>
-              <button class="element__like-button" type="button" aria-label="Поставить лайк."></button>
+              <button
+                class="element__like-button"
+                type="button"
+                aria-label="Поставить лайк."
+              ></button>
             </div>
-          </li>
-          <li class="element">
+          </li> -->
+          <!-- <li class="element">
+            <button class="element__delete-button"></button>
             <img
               src="./images/elements/elbrus.jpg"
               alt="Вид на гору Эльбрус."
               class="element__image"
+              id="elementImage"
             />
             <div class="element__title-container">
               <h2 class="element__title">Гора Эльбрус</h2>
-              <button class="element__like-button" type="button" aria-label="Поставить лайк."></button>
+              <button
+                class="element__like-button"
+                type="button"
+                aria-label="Поставить лайк."
+              ></button>
             </div>
-          </li>
-          <li class="element">
+          </li> -->
+          <!-- <li class="element">
+            <button class="element__delete-button"></button>
             <img
               src="./images/elements/dombai.jpg"
               alt="Вид на Домбай."
@@ -85,10 +117,15 @@
             />
             <div class="element__title-container">
               <h2 class="element__title">Домбай</h2>
-              <button class="element__like-button" type="button" aria-label="Поставить лайк."></button>
+              <button
+                class="element__like-button"
+                type="button"
+                aria-label="Поставить лайк."
+              ></button>
             </div>
           </li>
           <li class="element">
+            <button class="element__delete-button"></button>
             <img
               src="./images/elements/karachaevsk.jpg"
               alt="Ветхое, кирпичное строение."
@@ -96,28 +133,132 @@
             />
             <div class="element__title-container">
               <h2 class="element__title">Карачаево-Черкессия</h2>
-              <button class="element__like-button" type="button" aria-label="Поставить лайк."></button>
+              <button
+                class="element__like-button element__like-button_active"
+                type="button"
+                aria-label="Поставить лайк."
+              ></button>
             </div>
-          </li>
+          </li> -->
         </ul>
       </section>
     </main>
-    
+
     <footer class="footer">
       <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
     </footer>
 
-    <div class="popup popup_opened">
+    <div class="popup" id="popupEditProfile">
       <div class="popup__window">
-        <button class="popup__close-button" type="button" aria-label="Закрыть окно редактирования."></button>
+        <button
+          class="popup__close-button"
+          id="closeProfileButton"
+          type="button"
+          aria-label="Закрыть окно редактирования."
+        ></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="editForm" class="popup__form">
-          <input type="text" name="inputName" placeholder="Имя" class="popup__input">
-          <input type="text" name="inputEmployment" placeholder="Занятие" class="popup__input">
-          <button type="submit" class="popup__submit-button" aria-label="Сохранить изменения.">Сохранить</button>
+        <form name="editForm" id="editForm" class="popup__form">
+          <input
+            type="text"
+            name="inputName"
+            id="inputProfileName"
+            placeholder="Имя"
+            class="popup__input"
+            required
+          />
+          <input
+            type="text"
+            name="inputEmployment"
+            id="inputProfileEmployment"
+            placeholder="Занятие"
+            class="popup__input"
+            required
+          />
+          <button
+            type="submit"
+            class="popup__submit-button"
+            id="submitProfileButton"
+            aria-label="Сохранить изменения."
+          >
+            Сохранить
+          </button>
         </form>
       </div>
     </div>
+    <div class="popup" id="popupNewItem">
+      <div class="popup__window">
+        <button
+          class="popup__close-button"
+          id="closeNewItemButton"
+          type="button"
+          aria-label="Закрыть окно."
+        ></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form name="newNewItemForm" id="editForm" class="popup__form">
+          <input
+            type="text"
+            name="inputNewItemName"
+            id="inputNewItemName"
+            placeholder="Название"
+            class="popup__input"
+            required
+          />
+          <input
+            type="text"
+            name="inputNewItemLink"
+            id="inputNewItemLink"
+            placeholder="Ссылка на картинку"
+            class="popup__input"
+            required
+          />
+          <button
+            type="submit"
+            class="popup__submit-button"
+            id="submitNewItemButton"
+            aria-label="Сохранить изменения."
+          >
+            Создать
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup" id="popupImage">
+      <figure class="popup__figure">
+        <button
+          class="popup__close-button"
+          id="closeImageButton"
+          type="button"
+          aria-label="Закрыть окно."
+        ></button>
+        <img
+          src=""
+          class="popup__figure-image"
+          alt=""
+        />
+        <figcaption class="popup__figure-caption">
+          
+        </figcaption>
+      </figure>
+    </div>
+    <template id="elementTemplate">
+      <li class="element">
+        <button class="element__delete-button" area-label="Удалить"></button>
+        <img
+          src=""
+          alt=""
+          class="element__image"
+          />
+        <div class="element__title-container">
+          <h2 class="element__title"></h2>
+          <button
+            class="element__like-button"
+            type="button"
+            aria-label="Поставить лайк."
+          ></button>
+        </div>
+      </li>
+    </template>
     <script src="./scripts/script.js"></script>
   </body>
 </html>

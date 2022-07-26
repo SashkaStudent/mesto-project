@@ -1,0 +1,8 @@
+.popup__figure-image {
+  width: 100%;
+  /* max-width: 816px; */
+  object-fit: contain;
+  max-width: 75vw;
+  max-height: 75vh;
+  /* min-height: 540px; */
+}

@@ -1,0 +1,16 @@
+.popup__figure {
+  margin: 0 80px;
+  display: table;
+  position: relative;
+  height: fit-content;
+  width: fit-content;
+  max-width: 75vw;
+  max-height: 75vh;
+}
+
+@media screen and (max-width:767px) {
+  .popup__figure {
+  margin: 0 40px;
+  }
+
+}
