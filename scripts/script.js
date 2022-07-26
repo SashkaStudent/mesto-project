@@ -25,50 +25,71 @@ const initialCards = [
   },
 ];
 
+const profile = {
+  nameNode: document.querySelector(".profile__name"),
+  employmentNode: document.querySelector(".profile__employment"),
+  editButtonNode: document.querySelector("#editProfileButton"),
+  newItemButtonNode: document.querySelector("#addNewItemButton"),
+};
+
+profile.editButtonNode.addEventListener("click", toggleEditProfilePopup);
+profile.newItemButtonNode.addEventListener("click", toggleNewItemPopup);
+
+const profileEditWindow = {
+  popupNode: document.querySelector("#popupEditProfile"),
+  nameInputNode: document.querySelector("#inputProfileName"),
+  employmentInputNode: document.querySelector("#inputProfileEmployment"),
+  closeButtonNode: document.querySelector("#closeProfileButton"),
+  submitButtonNode: document.querySelector("#submitProfileButton"),
+};
+
+profileEditWindow.closeButtonNode.addEventListener(
+  "click",
+  toggleEditProfilePopup
+);
+profileEditWindow.submitButtonNode.addEventListener(
+  "click",
+  handleEditProfileSubmit
+);
+
+const newItemWindow = {
+  popupNode: document.querySelector("#popupNewItem"),
+  nameInputNode: document.querySelector("#inputNewItemName"),
+  linkInputNode: document.querySelector("#inputNewItemLink"),
+  closeButtonNode: document.querySelector("#closeNewItemButton"),
+  submitButtonNode: document.querySelector("#submitNewItemButton"),
+};
+
+newItemWindow.closeButtonNode.addEventListener("click", toggleNewItemPopup);
+newItemWindow.submitButtonNode.addEventListener("click", handleNewItemSubmit);
+
+const imageWindow = {
+  popupNode: document.querySelector("#popupImage"),
+  imageNode: document.querySelector(".popup__figure-image"),
+  captionNode: document.querySelector(".popup__figure-caption"),
+  closeButtonNode: document.querySelector("#closeImageButton"),
+};
+
+imageWindow.closeButtonNode.addEventListener("click", toggleImagePopup);
+
 const cardTemplate = document.querySelector("#elementTemplate").content;
 const elementsList = document.querySelector(".elements__list");
-const editProfileButton = document.querySelector("#editProfileButton");
-const addNewItemButton = document.querySelector("#addNewItemButton");
-const closeProfileButton = document.querySelector("#closeProfileButton");
-const closeNewItemButton = document.querySelector("#closeNewItemButton");
-const closeImageButton = document.querySelector("#closeImageButton");
-const submitProfileButton = document.querySelector("#submitProfileButton");
-const submitNewItemButton = document.querySelector("#submitNewItemButton");
-const popupEditProfile = document.querySelector("#popupEditProfile");
-const popupNewItem = document.querySelector("#popupNewItem");
-const popupImage = document.querySelector("#popupImage");
-const editForm = document.querySelector("#editForm");
-const profileName = document.querySelector(".profile__name");
-const profileEmployment = document.querySelector(".profile__employment");
-const inputProfileName = document.querySelector("#inputProfileName");
-const inputProfileEmployment = document.querySelector(
-  "#inputProfileEmployment"
-);
-const inputNewItemName = document.querySelector("#inputNewItemName");
-const inputNewItemLink = document.querySelector("#inputNewItemLink");
-const itemsList = document.querySelector(".elements__list");
-
-editProfileButton.addEventListener("click", toggleEditProfilePopup);
-addNewItemButton.addEventListener("click", toggleNewItemPopup);
-closeProfileButton.addEventListener("click", toggleEditProfilePopup);
-closeNewItemButton.addEventListener("click", toggleNewItemPopup);
-closeImageButton.addEventListener("click", toggleImagePopup);
-
-submitProfileButton.addEventListener("click", handleProfileSubmit);
-submitNewItemButton.addEventListener("click", handleNewItemSubmit);
-inputProfileName.value = profileName.textContent;
-inputProfileEmployment.value = profileEmployment.textContent;
 
 initialCards.forEach((card) => {
   renderCard(card);
 });
 
 function toggleEditProfilePopup() {
+  profileEditWindow.nameInputNode.value = profile.nameNode.textContent;
+  profileEditWindow.employmentInputNode.value =
+    profile.employmentNode.textContent;
   popupEditProfile.classList.toggle("popup_opened");
 }
 
 function toggleNewItemPopup() {
-  popupNewItem.classList.toggle("popup_opened");
+  newItemWindow.nameInputNode.value = '';
+  newItemWindow.linkInputNode.value = '';
+  newItemWindow.popupNode.classList.toggle("popup_opened");
 }
 
 function toggleImagePopup(event) {
@@ -77,36 +98,38 @@ function toggleImagePopup(event) {
     const imageSrc = currentElement.querySelector(".element__image").src;
     const elementTitle =
       currentElement.querySelector(".element__title").textContent;
-    popupImage.querySelector(".popup__figure-image").src = imageSrc;
-    popupImage.querySelector(".popup__figure-caption").textContent =
-      elementTitle;
+    imageWindow.imageNode.src = imageSrc;
+    imageWindow.captionNode.textContent = elementTitle;
   }
-  popupImage.classList.toggle("popup_opened");
+  imageWindow.popupNode.classList.toggle("popup_opened");
 }
 
 function toggleLike(event) {
-    event.target.classList.toggle('element__like-button_active');
+  event.target.classList.toggle("element__like-button_active");
 }
 
-function handleDeleteElement(event){
-  event.target.closest('.element').remove();
+function handleDeleteElement(event) {
+  event.target.closest(".element").remove();
 }
 
-function handleProfileSubmit(event) {
+function handleEditProfileSubmit(event) {
   event.preventDefault();
-  if (inputProfileName.value != "" && inputProfileEmployment.value != "") {
-    profileName.textContent = inputProfileName.value;
-    profileEmployment.textContent = inputProfileEmployment.value;
-    popupEditProfile.classList.toggle("popup_opened");
+  if (
+    profileEditWindow.nameInputNode.value != "" &&
+    profileEditWindow.employmentInputNode.value != ""
+  ) {
+    profile.nameNode.textContent = profileEditWindow.nameInputNode.value;
+    profile.employmentNode.textContent = profileEditWindow.employmentInputNode.value;
+    toggleEditProfilePopup();
   }
 }
 
 function handleNewItemSubmit(event) {
   event.preventDefault();
-  if (inputNewItemName.value != "" && inputNewItemLink.value != "") {
-    const card = makeNewCard(inputNewItemName.value, inputNewItemLink.value);
+  if (newItemWindow.nameInputNode.value != "" && newItemWindow.linkInputNode.value != "") {
+    const card = makeNewCard(newItemWindow.nameInputNode.value, newItemWindow.linkInputNode.value);
     renderCard(card);
-    popupNewItem.classList.toggle("popup_opened");
+    toggleNewItemPopup();
   }
 }
 
@@ -121,7 +144,11 @@ function renderCard(card) {
   elementImage.src = card.link;
   elementImage.addEventListener("click", toggleImagePopup);
   cardElement.querySelector(".element__title").textContent = card.name;
-  cardElement.querySelector(".element__like-button").addEventListener('click', toggleLike);
-  cardElement.querySelector(".element__delete-button").addEventListener('click', handleDeleteElement);
+  cardElement
+    .querySelector(".element__like-button")
+    .addEventListener("click", toggleLike);
+  cardElement
+    .querySelector(".element__delete-button")
+    .addEventListener("click", handleDeleteElement);
   elementsList.prepend(cardElement);
 }
