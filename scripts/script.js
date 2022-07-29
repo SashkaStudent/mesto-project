@@ -32,76 +32,84 @@ const profile = {
   newItemButtonNode: document.querySelector("#addNewItemButton"),
 };
 
-profile.editButtonNode.addEventListener("click", toggleEditProfilePopup);
-profile.newItemButtonNode.addEventListener("click", toggleNewItemPopup);
+profile.editButtonNode.addEventListener("click", handleEditProfileClick);
+profile.newItemButtonNode.addEventListener("click", handleNewItemClick);
 
 const profileEditWindow = {
   popupNode: document.querySelector("#popupEditProfile"),
   nameInputNode: document.querySelector("#inputProfileName"),
   employmentInputNode: document.querySelector("#inputProfileEmployment"),
-  closeButtonNode: document.querySelector("#closeProfileButton"),
-  submitButtonNode: document.querySelector("#submitProfileButton"),
+  formNode: document
+    .querySelector("#popupEditProfile")
+    .querySelector(".popup__form"),
 };
 
-profileEditWindow.closeButtonNode.addEventListener(
-  "click",
-  toggleEditProfilePopup
-);
-profileEditWindow.submitButtonNode.addEventListener(
-  "click",
-  handleEditProfileSubmit
-);
+profileEditWindow.formNode.addEventListener("submit", handleEditProfileSubmit);
 
 const newItemWindow = {
   popupNode: document.querySelector("#popupNewItem"),
   nameInputNode: document.querySelector("#inputNewItemName"),
   linkInputNode: document.querySelector("#inputNewItemLink"),
-  closeButtonNode: document.querySelector("#closeNewItemButton"),
-  submitButtonNode: document.querySelector("#submitNewItemButton"),
+  formNode: document
+    .querySelector("#popupNewItem")
+    .querySelector(".popup__form"),
 };
 
-newItemWindow.closeButtonNode.addEventListener("click", toggleNewItemPopup);
-newItemWindow.submitButtonNode.addEventListener("click", handleNewItemSubmit);
+newItemWindow.formNode.addEventListener("submit", handleNewItemSubmit);
 
 const imageWindow = {
   popupNode: document.querySelector("#popupImage"),
   imageNode: document.querySelector(".popup__figure-image"),
   captionNode: document.querySelector(".popup__figure-caption"),
-  closeButtonNode: document.querySelector("#closeImageButton"),
 };
 
-imageWindow.closeButtonNode.addEventListener("click", toggleImagePopup);
+document.querySelectorAll(".popup__close-button").forEach((btn) => {
+  const popup = btn.closest('.popup')
+  btn.addEventListener("click", () => closePopup(popup));
+});
 
 const cardTemplate = document.querySelector("#elementTemplate").content;
 const elementsList = document.querySelector(".elements__list");
 
 initialCards.forEach((card) => {
-  renderCard(card);
+  const cardElement = makeNewCard(card.name, card.link);
+  elementsList.prepend(cardElement);
 });
 
-function toggleEditProfilePopup() {
+function openPopup(popup) {
+  popup.classList.add("popup_opened");
+}
+
+function closePopup(popup) {
+  popup.classList.remove("popup_opened");
+}
+
+function handleEditProfileClick() {
   profileEditWindow.nameInputNode.value = profile.nameNode.textContent;
   profileEditWindow.employmentInputNode.value =
     profile.employmentNode.textContent;
-  popupEditProfile.classList.toggle("popup_opened");
+    openPopup(profileEditWindow.popupNode);
+
 }
 
-function toggleNewItemPopup() {
-  newItemWindow.nameInputNode.value = '';
-  newItemWindow.linkInputNode.value = '';
-  newItemWindow.popupNode.classList.toggle("popup_opened");
+function handleNewItemClick() {
+  newItemWindow.formNode.reset();
+  openPopup(newItemWindow.popupNode);
 }
 
-function toggleImagePopup(event) {
+function handleImageClick(event) {
   const currentElement = event.target.closest(".element");
   if (currentElement != null) {
-    const imageSrc = currentElement.querySelector(".element__image").src;
+    const currentElementImage = currentElement.querySelector(".element__image");
+    const imageSrc = currentElementImage.src;
+    const imageAlt = currentElementImage.alt;
     const elementTitle =
       currentElement.querySelector(".element__title").textContent;
     imageWindow.imageNode.src = imageSrc;
+    imageWindow.imageNode.alt = imageAlt;
     imageWindow.captionNode.textContent = elementTitle;
   }
-  imageWindow.popupNode.classList.toggle("popup_opened");
+  openPopup(imageWindow.popupNode);
 }
 
 function toggleLike(event) {
@@ -119,30 +127,35 @@ function handleEditProfileSubmit(event) {
     profileEditWindow.employmentInputNode.value != ""
   ) {
     profile.nameNode.textContent = profileEditWindow.nameInputNode.value;
-    profile.employmentNode.textContent = profileEditWindow.employmentInputNode.value;
-    toggleEditProfilePopup();
+    profile.employmentNode.textContent =
+      profileEditWindow.employmentInputNode.value;
+    closePopup(profileEditWindow.popupNode);
+    
   }
 }
 
 function handleNewItemSubmit(event) {
   event.preventDefault();
-  if (newItemWindow.nameInputNode.value != "" && newItemWindow.linkInputNode.value != "") {
-    const card = makeNewCard(newItemWindow.nameInputNode.value, newItemWindow.linkInputNode.value);
-    renderCard(card);
-    toggleNewItemPopup();
+  if (
+    newItemWindow.nameInputNode.value != "" &&
+    newItemWindow.linkInputNode.value != ""
+  ) {
+    const cardElement = makeNewCard(
+      newItemWindow.nameInputNode.value,
+      newItemWindow.linkInputNode.value
+    );
+    elementsList.prepend(cardElement);
+    closePopup(newItemWindow.popupNode);
   }
 }
 
 function makeNewCard(name, link) {
   const card = { name: name, link: link };
-  return card;
-}
-
-function renderCard(card) {
   const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
   const elementImage = cardElement.querySelector(".element__image");
   elementImage.src = card.link;
-  elementImage.addEventListener("click", toggleImagePopup);
+  elementImage.alt = card.name;
+  elementImage.addEventListener("click", handleImageClick);
   cardElement.querySelector(".element__title").textContent = card.name;
   cardElement
     .querySelector(".element__like-button")
@@ -150,5 +163,5 @@ function renderCard(card) {
   cardElement
     .querySelector(".element__delete-button")
     .addEventListener("click", handleDeleteElement);
-  elementsList.prepend(cardElement);
+  return cardElement;
 }
