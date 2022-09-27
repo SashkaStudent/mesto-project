@@ -42,8 +42,7 @@
       </section>
 
       <section class="elements">
-        <ul class="elements__list">
-        </ul>
+        <ul class="elements__list"></ul>
       </section>
     </main>
 
@@ -60,31 +59,53 @@
           aria-label="Закрыть окно редактирования."
         ></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form name="editProfileForm" class="popup__form">
-          <input
-            type="text"
-            name="inputName"
-            id="inputProfileName"
-            placeholder="Имя"
-            class="popup__input"
-            required
-          />
-          <input
-            type="text"
-            name="inputEmployment"
-            id="inputProfileEmployment"
-            placeholder="Занятие"
-            class="popup__input"
-            required
-          />
-          <button
-            type="submit"
-            class="popup__submit-button"
-            id="submitProfileButton"
-            aria-label="Сохранить изменения."
-          >
-            Сохранить
-          </button>
+        <form name="editProfileForm" class="popup__form" novalidate>
+          <fieldset class="popup__fieldset">
+            <label class="popup__field">
+              <input
+                type="text"
+                name="inputName"
+                id="inputProfileName"
+                placeholder="Имя"
+                class="popup__input"
+                minlength="3"
+                maxlength="40"
+                pattern="^[a-zA-Zа-яА-Я -]+$"
+                data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                required
+              />
+              <span
+                class="popup__input-error"
+                id="inputProfileNameError"
+              ></span>
+            </label>
+            <label class="popup__field">
+              <input
+                type="text"
+                name="inputEmployment"
+                id="inputProfileEmployment"
+                placeholder="Занятие"
+                class="popup__input"
+                minlength="2"
+                maxlength="200"
+                pattern="^[a-zA-Zа-яА-Я -]+$"
+                data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                required
+              />
+              <span
+                class="popup__input-error"
+                id="inputProfileEmploymentError"
+              ></span>
+            </label>
+            <button
+              type="submit"
+              class="popup__submit-button"
+              id="submitProfileButton"
+              aria-label="Сохранить изменения."
+            >
+              Сохранить
+            </button>
+          </fieldset>
         </form>
       </div>
     </div>
@@ -97,31 +118,49 @@
           aria-label="Закрыть окно."
         ></button>
         <h2 class="popup__title">Новое место</h2>
-        <form name="newItemForm" class="popup__form">
-          <input
-            type="text"
-            name="inputNewItemName"
-            id="inputNewItemName"
-            placeholder="Название"
-            class="popup__input"
-            required
-          />
-          <input
-            type="text"
-            name="inputNewItemLink"
-            id="inputNewItemLink"
-            placeholder="Ссылка на картинку"
-            class="popup__input"
-            required
-          />
-          <button
-            type="submit"
-            class="popup__submit-button"
-            id="submitNewItemButton"
-            aria-label="Сохранить изменения."
-          >
-            Создать
-          </button>
+        <form name="newItemForm" class="popup__form" novalidate>
+          <fieldset class="popup__fieldset">
+            <label class="popup__field">
+              <input
+                type="text"
+                name="inputNewItemName"
+                id="inputNewItemName"
+                placeholder="Название"
+                class="popup__input"
+                minlength="2"
+                maxlength="30"
+                pattern="^[a-zA-Zа-яА-Я -]+$"
+                data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                required
+              />
+              <span
+                class="popup__input-error"
+                id="inputNewItemNameError"
+              ></span>
+            </label>
+            <label class="popup__field">
+              <input
+                type="url"
+                name="inputNewItemLink"
+                id="inputNewItemLink"
+                placeholder="Ссылка на картинку"
+                class="popup__input"
+                required
+              />
+              <span
+                class="popup__input-error"
+                id="inputNewItemLinkError"
+              ></span>
+            </label>
+            <button
+              type="submit"
+              class="popup__submit-button"
+              id="submitNewItemButton"
+              aria-label="Сохранить изменения."
+            >
+              Создать
+            </button>
+          </fieldset>
         </form>
       </div>
     </div>
@@ -139,19 +178,13 @@
           src="./images/elements/altai.png"
           alt="Алтай"
         />
-        <figcaption class="popup__figure-caption">
-          
-        </figcaption>
+        <figcaption class="popup__figure-caption"></figcaption>
       </figure>
     </div>
     <template id="elementTemplate">
       <li class="element">
         <button class="element__delete-button" area-label="Удалить"></button>
-        <img
-          src=""
-          alt=""
-          class="element__image"
-          />
+        <img src="" alt="" class="element__image" />
         <div class="element__title-container">
           <h2 class="element__title"></h2>
           <button
@@ -162,6 +195,6 @@
         </div>
       </li>
     </template>
-    <script src="./scripts/script.js"></script>
+    <script type="module" src="./scripts/index.js"></script>
   </body>
 </html>

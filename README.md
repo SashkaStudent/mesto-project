@@ -9,7 +9,7 @@ The functionality is implemented by a java script. You can create a new card, ed
 
 ## Used
 
-HTML, CSS, JS
+Figma, HTML, CSS, JS, form validation.
 
 
 ## Github pages
