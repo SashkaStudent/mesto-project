@@ -76,6 +76,9 @@ function handleDeleteElement(event) {
 
 function handleEditProfileSubmit(event) {
   event.preventDefault();
+  const form = event;
+
+  console.log(form);
   if (
     profileEditWindow.nameInputNode.value != "" &&
     profileEditWindow.employmentInputNode.value != ""

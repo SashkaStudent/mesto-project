@@ -16,9 +16,9 @@ const hideInputError = (formElement, inputElement, options) => {
 export const enableValidation = (options) => {
   const formList = Array.from(document.querySelectorAll(options.formSelector));
   formList.forEach((formElement) => {
-    formElement.addEventListener("submit", function (evt) {
-      evt.preventDefault();
-    });
+    // formElement.addEventListener("submit", function (evt) {
+    //   evt.preventDefault();
+    // });
 
     setEventListeners(formElement, options);
 
@@ -47,8 +47,10 @@ function hasInvalidInput(inputList) {
 
 function toggleButtonState(inputList, buttonElement, options) {
   if (hasInvalidInput(inputList)) {
+    buttonElement.disabled = true;
     buttonElement.classList.add(options.inactiveButtonClass);
   } else {
+    buttonElement.disabled = false;
     buttonElement.classList.remove(options.inactiveButtonClass);
   }
 }
