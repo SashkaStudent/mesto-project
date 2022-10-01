@@ -67,7 +67,7 @@ const checkInputValidity = (formElement, inputElement, options) => {
 };
 
 export const resetPopupValidation = (popupElement, options)=>{
-  const popupForm = popupElement.querySelector(".popup__form");
+  const popupForm = popupElement.querySelector(options.formSelector);
   if(popupForm){
     const inputList = Array.from(popupForm.querySelectorAll(options.inputSelector));
     const buttonElement = popupForm.querySelector(options.submitButtonSelector);
