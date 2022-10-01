@@ -1,7 +1,7 @@
 // import { checkForm } from "./validation";
 
 import { validationOptions } from "./data.js";
-import { resetForm } from "./validation.js";
+import { resetPopupValidation } from "./validation.js";
 
 export const profileEditWindow = {
   popupNode: document.querySelector("#popupEditProfile"),
@@ -31,8 +31,7 @@ export const imageWindow = {
 
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
-  const popupForm = popup.querySelector(".popup__form");
-  if(popupForm) resetForm(popupForm, validationOptions);
+  resetPopupValidation(popup, validationOptions);
   document.addEventListener("keydown", closePopupByEscHandler);
 }
 

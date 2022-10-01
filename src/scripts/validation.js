@@ -16,9 +16,6 @@ const hideInputError = (formElement, inputElement, options) => {
 export const enableValidation = (options) => {
   const formList = Array.from(document.querySelectorAll(options.formSelector));
   formList.forEach((formElement) => {
-    // formElement.addEventListener("submit", function (evt) {
-    //   evt.preventDefault();
-    // });
 
     setEventListeners(formElement, options);
 
@@ -69,11 +66,15 @@ const checkInputValidity = (formElement, inputElement, options) => {
   }
 };
 
-export const resetForm = (formElement, options)=>{
-  const inputList = Array.from(formElement.querySelectorAll(options.inputSelector));
-  const buttonElement = formElement.querySelector(options.submitButtonSelector);
-  toggleButtonState(inputList, buttonElement, options);
-  inputList.forEach((input)=>{
-    hideInputError(formElement, input, options);
-  });
+export const resetPopupValidation = (popupElement, options)=>{
+  const popupForm = popupElement.querySelector(".popup__form");
+  if(popupForm){
+    const inputList = Array.from(popupForm.querySelectorAll(options.inputSelector));
+    const buttonElement = popupForm.querySelector(options.submitButtonSelector);
+    toggleButtonState(inputList, buttonElement, options);
+    inputList.forEach((input)=>{
+      hideInputError(popupForm, input, options);
+    });
+  }
+
 }
