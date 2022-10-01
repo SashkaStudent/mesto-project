@@ -1,4 +1,4 @@
-import '../pages/index.css';
+import "../pages/index.css";
 import { makeNewCard } from "./card.js";
 import { initialCards, validationOptions } from "./data.js";
 import {
@@ -77,33 +77,21 @@ function handleDeleteElement(event) {
 
 function handleEditProfileSubmit(event) {
   event.preventDefault();
-  const form = event;
-
-  console.log(form);
-  if (
-    profileEditWindow.nameInputNode.value != "" &&
-    profileEditWindow.employmentInputNode.value != ""
-  ) {
-    profile.nameNode.textContent = profileEditWindow.nameInputNode.value;
-    profile.employmentNode.textContent =
-      profileEditWindow.employmentInputNode.value;
-    closePopup(profileEditWindow.popupNode);
-  }
+  profile.nameNode.textContent = profileEditWindow.nameInputNode.value;
+  profile.employmentNode.textContent =
+    profileEditWindow.employmentInputNode.value;
+  closePopup(profileEditWindow.popupNode);
 }
 
 function handleNewItemSubmit(event) {
   event.preventDefault();
-  if (
-    newItemWindow.nameInputNode.value != "" &&
-    newItemWindow.linkInputNode.value != ""
-  ) {
-    const cardElement = makeNewCard(
-      newItemWindow.nameInputNode.value,
-      newItemWindow.linkInputNode.value
-    );
-    elementsList.prepend(cardElement);
-    closePopup(newItemWindow.popupNode);
-  }
+
+  const cardElement = makeNewCard(
+    newItemWindow.nameInputNode.value,
+    newItemWindow.linkInputNode.value
+  );
+  elementsList.prepend(cardElement);
+  closePopup(newItemWindow.popupNode);
 }
 
 enableValidation(validationOptions);
