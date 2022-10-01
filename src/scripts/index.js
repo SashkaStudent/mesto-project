@@ -1,3 +1,4 @@
+import '../pages/index.css';
 import { makeNewCard } from "./card.js";
 import { initialCards, validationOptions } from "./data.js";
 import {
