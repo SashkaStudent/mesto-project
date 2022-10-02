@@ -8,7 +8,7 @@ import {
   openPopup,
   profileEditWindow,
 } from "./modal.js";
-import { enableValidation } from "./validation.js";
+import { enableValidation, resetPopupValidation } from "./validation.js";
 
 const elementsList = document.querySelector(".elements__list");
 
@@ -45,11 +45,15 @@ function handleEditProfileClick() {
   profileEditWindow.employmentInputNode.value =
     profile.employmentNode.textContent;
   openPopup(profileEditWindow.popupNode);
+  resetPopupValidation(profileEditWindow.popupNode, validationOptions);
+
 }
 
 function handleNewItemClick() {
   newItemWindow.formNode.reset();
   openPopup(newItemWindow.popupNode);
+  resetPopupValidation(newItemWindow.popupNode, validationOptions);
+
 }
 
 function handleImageClick(event) {
