@@ -31,7 +31,6 @@ export const imageWindow = {
 
 export function openPopup(popup) {
   popup.classList.add("popup_opened");
-  resetPopupValidation(popup, validationOptions);
   document.addEventListener("keydown", closePopupByEscHandler);
 }
 
