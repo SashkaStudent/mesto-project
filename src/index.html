@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./pages/index.css" />
     <title>Место</title>
   </head>
   <body class="content">
@@ -17,11 +18,14 @@
 
     <main class="page">
       <section class="profile">
-        <img
-          class="profile__avatar"
-          src="<%=require('./images/avatar.jpg')%>"
-          alt="Аватар пользователя."
-        />
+        <button class="profile__avatar-container">
+          <img
+            class="profile__avatar"
+            src="<%=require('./images/avatar.jpg')%>"
+            alt="Аватар пользователя."
+          />
+        </button>
+
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button
@@ -180,6 +184,42 @@
         <figcaption class="popup__figure-caption"></figcaption>
       </figure>
     </div>
+
+    <div class="popup" id="popupEditAvatar">
+      <div class="popup__window">
+        <button
+          class="popup__close-button"
+          id="closeNewItemButton"
+          type="button"
+          aria-label="Закрыть окно."
+        ></button>
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form name="editAvatarForm" class="popup__form" novalidate>
+          <fieldset class="popup__fieldset">
+            <label class="popup__field">
+              <input
+                type="url"
+                name="inputAvatarLink"
+                id="inputAvatarLink"
+                placeholder="Ссылка на картинку"
+                class="popup__input"
+                required
+              />
+              <span class="popup__input-error" id="inputAvatarLinkError"></span>
+            </label>
+            <button
+              type="submit"
+              class="popup__submit-button"
+              id="submitEditAvatarButton"
+              aria-label="Сохранить изменения."
+            >
+              Создать
+            </button>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+
     <template id="elementTemplate">
       <li class="element">
         <button class="element__delete-button" area-label="Удалить"></button>
@@ -194,5 +234,6 @@
         </div>
       </li>
     </template>
+    <script type="modal" src="./scripts/index.js"></script>
   </body>
 </html>

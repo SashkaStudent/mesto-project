@@ -3,6 +3,14 @@
 import { validationOptions } from "./data.js";
 import { resetPopupValidation } from "./validation.js";
 
+export const avatarEditWindow = {
+  popupNode: document.querySelector("#popupEditAvatar"),
+  linkInputNode: document.querySelector("#inputAvatarLink"),
+  formNode: document
+    .querySelector("#popupEditAvatar")
+    .querySelector(".popup__form")
+}
+
 export const profileEditWindow = {
   popupNode: document.querySelector("#popupEditProfile"),
   nameInputNode: document.querySelector("#inputProfileName"),

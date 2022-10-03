@@ -1,14 +1,18 @@
 import "../pages/index.css";
 import { makeNewCard } from "./card.js";
-import { initialCards, validationOptions } from "./data.js";
+import { apiOptions, initialCards, validationOptions } from "./data.js";
 import {
   closePopup,
   imageWindow,
   newItemWindow,
   openPopup,
   profileEditWindow,
+  avatarEditWindow
 } from "./modal.js";
 import { enableValidation, resetPopupValidation } from "./validation.js";
+import { getCards, getProfile } from "./api.js";
+
+getProfile(apiOptions);
 
 const elementsList = document.querySelector(".elements__list");
 
@@ -19,6 +23,7 @@ initialCards.forEach((card) => {
 
 const profile = {
   nameNode: document.querySelector(".profile__name"),
+  avatarNode: document.querySelector(".profile__avatar-container"),
   employmentNode: document.querySelector(".profile__employment"),
   editButtonNode: document.querySelector("#editProfileButton"),
   newItemButtonNode: document.querySelector("#addNewItemButton"),
@@ -28,6 +33,10 @@ profile.editButtonNode.addEventListener("click", handleEditProfileClick);
 profile.newItemButtonNode.addEventListener("click", handleNewItemClick);
 profileEditWindow.formNode.addEventListener("submit", handleEditProfileSubmit);
 newItemWindow.formNode.addEventListener("submit", handleNewItemSubmit);
+profile.avatarNode.addEventListener("click", ()=>{
+  openPopup(avatarEditWindow.popupNode);
+  resetPopupValidation(profileEditWindow.popupNode, validationOptions);
+});
 
 elementsList.addEventListener("click", (evt) => {
   const currentClassList = evt.target.classList;
