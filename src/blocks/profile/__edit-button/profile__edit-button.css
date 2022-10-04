@@ -13,6 +13,7 @@
   background-repeat: no-repeat;
   cursor: pointer;
   grid-area: edit-button;
+  transition: opacity 0.3s ease-out;
 }
 
 .profile__edit-button:hover {
