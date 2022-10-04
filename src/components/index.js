@@ -38,13 +38,13 @@ getProfile().then((profileData) => {
   profile.data = profileData;
   profile.nameNode.textContent = profileData.name;
   profile.employmentNode.textContent = profileData.about;
-  console.log(profileData);
-  console.log(profile);
+  // console.log(profileData);
+  // console.log(profile);
   profile.avatarImageNode.src = profileData.avatar;
 });
 
 getCards().then((cards) => {
-  console.log(cards);
+  // console.log(cards);
   cards.forEach((card) => {
     const isForeign = card.owner._id !== profile.data._id;
     const cardElement = makeNewCard(card, isForeign);
