@@ -1,7 +1,7 @@
 // import { checkForm } from "./validation";
 
-import { validationOptions } from "./data.js";
-import { resetPopupValidation } from "./validation.js";
+// import { validationOptions } from "./data.js";
+// import { resetPopupValidation } from "./validation.js";
 
 export const avatarEditWindow = {
   popupNode: document.querySelector("#popupEditAvatar"),
@@ -47,6 +47,11 @@ export function closePopup(popup) {
   document.removeEventListener("keydown", closePopupByEscHandler);
 }
 
+export function changeButtonContent(popup, buttonContent, isDisabled){
+  const submitButton = popup.querySelector(".popup__submit-button")
+  submitButton.disabled = isDisabled;
+  submitButton.textContent = buttonContent;
+}
 
 function closePopupByEscHandler(evt){
   if (evt.key === "Escape") {

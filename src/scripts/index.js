@@ -1,41 +1,73 @@
 import "../pages/index.css";
 import { makeNewCard } from "./card.js";
-import { apiOptions, initialCards, validationOptions } from "./data.js";
+import { validationOptions } from "./data.js";
 import {
   closePopup,
   imageWindow,
   newItemWindow,
   openPopup,
   profileEditWindow,
-  avatarEditWindow
+  avatarEditWindow,
+  changeButtonContent,
 } from "./modal.js";
 import { enableValidation, resetPopupValidation } from "./validation.js";
-import { getCards, getProfile } from "./api.js";
-
-getProfile(apiOptions);
+import {
+  deleteCard,
+  deleteLike,
+  getCards,
+  getProfile,
+  postCard,
+  putLike,
+  setAvatar,
+  setProfile,
+} from "./api.js";
 
 const elementsList = document.querySelector(".elements__list");
 
-initialCards.forEach((card) => {
-  const cardElement = makeNewCard(card.name, card.link);
-  elementsList.prepend(cardElement);
-});
-
 const profile = {
+  data: {},
   nameNode: document.querySelector(".profile__name"),
   avatarNode: document.querySelector(".profile__avatar-container"),
+  avatarImageNode: document.querySelector(".profile__avatar"),
   employmentNode: document.querySelector(".profile__employment"),
   editButtonNode: document.querySelector("#editProfileButton"),
   newItemButtonNode: document.querySelector("#addNewItemButton"),
 };
 
+getProfile().then((profileData) => {
+  profile.data = profileData;
+  profile.nameNode.textContent = profileData.name;
+  profile.employmentNode.textContent = profileData.about;
+  console.log(profileData);
+  console.log(profile);
+  profile.avatarImageNode.src = profileData.avatar;
+});
+
+getCards().then((cards) => {
+  console.log(cards);
+  cards.forEach((card) => {
+    const isForeign = card.owner._id !== profile.data._id;
+    const cardElement = makeNewCard(card, isForeign);
+    const liked = card.likes.some((like) => {
+      return like._id === profile.data._id;
+    });
+    if (liked)
+      cardElement
+        .querySelector(".element__like-button")
+        .classList.add("element__like-button_active");
+    elementsList.append(cardElement);
+  });
+});
+
 profile.editButtonNode.addEventListener("click", handleEditProfileClick);
 profile.newItemButtonNode.addEventListener("click", handleNewItemClick);
 profileEditWindow.formNode.addEventListener("submit", handleEditProfileSubmit);
 newItemWindow.formNode.addEventListener("submit", handleNewItemSubmit);
-profile.avatarNode.addEventListener("click", ()=>{
+avatarEditWindow.formNode.addEventListener("submit", handleEditAvatarSubmit);
+
+profile.avatarNode.addEventListener("click", () => {
   openPopup(avatarEditWindow.popupNode);
-  resetPopupValidation(profileEditWindow.popupNode, validationOptions);
+  resetPopupValidation(avatarEditWindow.popupNode, validationOptions);
 });
 
 elementsList.addEventListener("click", (evt) => {
@@ -43,8 +75,24 @@ elementsList.addEventListener("click", (evt) => {
   if (currentClassList.contains("element__image")) {
     handleImageClick(evt);
   } else if (currentClassList.contains("element__like-button")) {
+    const currentCard = evt.target.closest(".element");
+    if (evt.target.classList.contains("element__like-button_active")) {
+      deleteLike(currentCard.dataset.cardId).then((card) => {
+        currentCard.querySelector(".element__likes-count").textContent =
+          card.likes.length;
+      });
+    } else {
+      putLike(currentCard.dataset.cardId).then((card) => {
+        currentCard.querySelector(".element__likes-count").textContent =
+          card.likes.length;
+      });
+    }
+
     toggleLike(evt);
-  } else if (currentClassList.contains("element__delete-button")) {
+  } else if (
+    currentClassList.contains("element__delete-button") &&
+    !currentClassList.contains("element__delete-button_disabled")
+  ) {
     handleDeleteElement(evt);
   }
 });
@@ -55,14 +103,12 @@ function handleEditProfileClick() {
     profile.employmentNode.textContent;
   openPopup(profileEditWindow.popupNode);
   resetPopupValidation(profileEditWindow.popupNode, validationOptions);
-
 }
 
 function handleNewItemClick() {
   newItemWindow.formNode.reset();
   openPopup(newItemWindow.popupNode);
   resetPopupValidation(newItemWindow.popupNode, validationOptions);
-
 }
 
 function handleImageClick(event) {
@@ -85,26 +131,61 @@ function toggleLike(event) {
 }
 
 function handleDeleteElement(event) {
-  event.target.closest(".element").remove();
+  const cardElement = event.target.closest(".element");
+  deleteCard(cardElement.dataset.cardId).then(() => {
+    event.target.closest(".element").remove();
+  });
 }
 
 function handleEditProfileSubmit(event) {
   event.preventDefault();
-  profile.nameNode.textContent = profileEditWindow.nameInputNode.value;
-  profile.employmentNode.textContent =
-    profileEditWindow.employmentInputNode.value;
-  closePopup(profileEditWindow.popupNode);
+  changeButtonContent(profileEditWindow.popupNode, "Сохранение...", true);
+
+  setProfile(
+    profileEditWindow.nameInputNode.value,
+    profileEditWindow.employmentInputNode.value
+  ).then((profileData) => {
+    profile.nameNode.textContent = profileData.name;
+    profile.employmentNode.textContent = profileData.about;
+  }).finally(()=>{
+    changeButtonContent(profileEditWindow.popupNode, "Сохранить", false);
+    closePopup(profileEditWindow.popupNode);
+  });
+  // profile.nameNode.textContent = profileEditWindow.nameInputNode.value;
+  // profile.employmentNode.textContent =
+  // profileEditWindow.employmentInputNode.value;
+}
+
+function handleEditAvatarSubmit(event) {
+  event.preventDefault();
+  changeButtonContent(avatarEditWindow.popupNode, "Сохранение...", true);
+  setAvatar(avatarEditWindow.linkInputNode.value)
+    .then((avatarData) => {
+      profile.avatarImageNode.src = avatarData.avatar;
+    })
+    .finally(() => {
+      changeButtonContent(avatarEditWindow.popupNode, "Сохранить", false);
+      avatarEditWindow.linkInputNode.value = "";
+      closePopup(avatarEditWindow.popupNode);
+    });
 }
 
 function handleNewItemSubmit(event) {
   event.preventDefault();
-
-  const cardElement = makeNewCard(
-    newItemWindow.nameInputNode.value,
-    newItemWindow.linkInputNode.value
-  );
-  elementsList.prepend(cardElement);
-  closePopup(newItemWindow.popupNode);
+  const card = {
+    name: newItemWindow.nameInputNode.value,
+    link: newItemWindow.linkInputNode.value,
+  };
+  changeButtonContent(newItemWindow.popupNode, "Создание...", true);
+  postCard(card)
+    .then((cardData) => {
+      const cardElement = makeNewCard(cardData, false);
+      elementsList.prepend(cardElement);
+    })
+    .finally(() => {
+      changeButtonContent(newItemWindow.popupNode, "Создать", false);
+      closePopup(newItemWindow.popupNode);
+    });
 }
 
 enableValidation(validationOptions);
