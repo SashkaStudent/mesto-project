@@ -1,4 +1,4 @@
-import "../pages/index.css";
+// import "../pages/index.css";
 import { makeNewCard } from "./card.js";
 import { validationOptions } from "./data.js";
 import {
@@ -34,30 +34,33 @@ const profile = {
   newItemButtonNode: document.querySelector("#addNewItemButton"),
 };
 
-getProfile().then((profileData) => {
-  profile.data = profileData;
-  profile.nameNode.textContent = profileData.name;
-  profile.employmentNode.textContent = profileData.about;
-  // console.log(profileData);
-  // console.log(profile);
-  profile.avatarImageNode.src = profileData.avatar;
-});
+getProfile().then(initProfile).then(initCards).catch(err=>{console.error(`Не удалось загрузить профиль. ${err}`)});
 
-getCards().then((cards) => {
-  // console.log(cards);
-  cards.forEach((card) => {
-    const isForeign = card.owner._id !== profile.data._id;
-    const cardElement = makeNewCard(card, isForeign);
-    const liked = card.likes.some((like) => {
-      return like._id === profile.data._id;
+function initProfile() {
+  getProfile().then((profileData=>{
+    profile.data = profileData;
+    profile.nameNode.textContent = profileData.name;
+    profile.employmentNode.textContent = profileData.about;
+    profile.avatarImageNode.src = profileData.avatar;
+  }))
+}
+
+function initCards() {
+  getCards().then((cards) => {
+    cards.forEach((card) => {
+      const cardElement = makeNewCard(
+        card,
+        profile.data._id,
+        handleImageClick,
+        handleLikeClick,
+        handleDeleteElement
+      );
+      elementsList.append(cardElement);
     });
-    if (liked)
-      cardElement
-        .querySelector(".element__like-button")
-        .classList.add("element__like-button_active");
-    elementsList.append(cardElement);
+  }).catch(err=>{
+    console.error(`Не удалось загрузить карточки. ${err}`)
   });
-});
+}
 
 profile.editButtonNode.addEventListener("click", handleEditProfileClick);
 profile.newItemButtonNode.addEventListener("click", handleNewItemClick);
@@ -68,33 +71,6 @@ avatarEditWindow.formNode.addEventListener("submit", handleEditAvatarSubmit);
 profile.avatarNode.addEventListener("click", () => {
   openPopup(avatarEditWindow.popupNode);
   resetPopupValidation(avatarEditWindow.popupNode, validationOptions);
-});
-
-elementsList.addEventListener("click", (evt) => {
-  const currentClassList = evt.target.classList;
-  if (currentClassList.contains("element__image")) {
-    handleImageClick(evt);
-  } else if (currentClassList.contains("element__like-button")) {
-    const currentCard = evt.target.closest(".element");
-    if (evt.target.classList.contains("element__like-button_active")) {
-      deleteLike(currentCard.dataset.cardId).then((card) => {
-        currentCard.querySelector(".element__likes-count").textContent =
-          card.likes.length;
-      });
-    } else {
-      putLike(currentCard.dataset.cardId).then((card) => {
-        currentCard.querySelector(".element__likes-count").textContent =
-          card.likes.length;
-      });
-    }
-
-    toggleLike(evt);
-  } else if (
-    currentClassList.contains("element__delete-button") &&
-    !currentClassList.contains("element__delete-button_disabled")
-  ) {
-    handleDeleteElement(evt);
-  }
 });
 
 function handleEditProfileClick() {
@@ -126,15 +102,44 @@ function handleImageClick(event) {
   openPopup(imageWindow.popupNode);
 }
 
+function handleLikeClick(event) {
+  const currentCard = event.target.closest(".element");
+  if (event.target.classList.contains("element__like-button_active")) {
+    deleteLike(currentCard.dataset.cardId)
+      .then((card) => {
+        currentCard.querySelector(".element__likes-count").textContent =
+          card.likes.length;
+        toggleLike(event);
+      })
+      .catch((err) => {
+        console.error(`Не удалось убрать лайк. ${err}`);
+      });
+  } else {
+    putLike(currentCard.dataset.cardId)
+      .then((card) => {
+        currentCard.querySelector(".element__likes-count").textContent =
+          card.likes.length;
+        toggleLike(event);
+      })
+      .catch((err) => {
+        console.error(`Не удалось поставить лайк. ${err}`);
+      });
+  }
+}
+
 function toggleLike(event) {
   event.target.classList.toggle("element__like-button_active");
 }
 
 function handleDeleteElement(event) {
   const cardElement = event.target.closest(".element");
-  deleteCard(cardElement.dataset.cardId).then(() => {
-    event.target.closest(".element").remove();
-  });
+  deleteCard(cardElement.dataset.cardId)
+    .then(() => {
+      event.target.closest(".element").remove();
+    })
+    .catch((err) => {
+      console.error(`Не удалось удалить карточку. ${err}`);
+    });
 }
 
 function handleEditProfileSubmit(event) {
@@ -144,13 +149,18 @@ function handleEditProfileSubmit(event) {
   setProfile(
     profileEditWindow.nameInputNode.value,
     profileEditWindow.employmentInputNode.value
-  ).then((profileData) => {
-    profile.nameNode.textContent = profileData.name;
-    profile.employmentNode.textContent = profileData.about;
-  }).finally(()=>{
-    changeButtonContent(profileEditWindow.popupNode, "Сохранить", false);
-    closePopup(profileEditWindow.popupNode);
-  });
+  )
+    .then((profileData) => {
+      profile.nameNode.textContent = profileData.name;
+      profile.employmentNode.textContent = profileData.about;
+      closePopup(profileEditWindow.popupNode);
+    })
+    .catch((err) => {
+      console.error(`Не удалось отредактировать профиль. ${err}`);
+    })
+    .finally(() => {
+      changeButtonContent(profileEditWindow.popupNode, "Сохранить", false);
+    });
   // profile.nameNode.textContent = profileEditWindow.nameInputNode.value;
   // profile.employmentNode.textContent =
   // profileEditWindow.employmentInputNode.value;
@@ -162,11 +172,14 @@ function handleEditAvatarSubmit(event) {
   setAvatar(avatarEditWindow.linkInputNode.value)
     .then((avatarData) => {
       profile.avatarImageNode.src = avatarData.avatar;
+      avatarEditWindow.linkInputNode.value = "";
+      closePopup(avatarEditWindow.popupNode);
+    })
+    .catch((err) => {
+      console.error(`Не удалось обновить аватар. ${err}`);
     })
     .finally(() => {
       changeButtonContent(avatarEditWindow.popupNode, "Сохранить", false);
-      avatarEditWindow.linkInputNode.value = "";
-      closePopup(avatarEditWindow.popupNode);
     });
 }
 
@@ -179,12 +192,21 @@ function handleNewItemSubmit(event) {
   changeButtonContent(newItemWindow.popupNode, "Создание...", true);
   postCard(card)
     .then((cardData) => {
-      const cardElement = makeNewCard(cardData, false);
+      const cardElement = makeNewCard(
+        cardData,
+        profile.data._id,
+        handleImageClick,
+        handleLikeClick,
+        handleDeleteElement
+      );
       elementsList.prepend(cardElement);
+      closePopup(newItemWindow.popupNode);
+    })
+    .catch((err) => {
+      console.error(`Не удалось добавить карточку. ${err}`);
     })
     .finally(() => {
       changeButtonContent(newItemWindow.popupNode, "Создать", false);
-      closePopup(newItemWindow.popupNode);
     });
 }
 

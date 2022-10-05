@@ -5,14 +5,19 @@ const config = {
     "Content-Type": "application/json",
   },
 };
+
+function checkResolve(resolve) {
+  if (resolve.ok) {
+    return resolve.json();
+  } else {
+    return Promise.reject(`Что-то пошло не так: ${resolve.status}`);
+  }
+}
+
 function getRequest(path) {
   return fetch(`${config.baseUrl}/${path}`, { headers: config.headers }).then(
     (res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      }
+      return checkResolve(res);
     }
   );
 }
@@ -23,11 +28,7 @@ function postRequest(path, body) {
     headers: config.headers,
     body: JSON.stringify(body),
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    }
+    return checkResolve(res);
   });
 }
 
@@ -37,11 +38,7 @@ function patchRequest(path, body) {
     headers: config.headers,
     body: JSON.stringify(body),
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    }
+    return checkResolve(res);
   });
 }
 
@@ -51,11 +48,7 @@ function putRequest(path, body) {
     headers: config.headers,
     body: JSON.stringify(body),
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    }
+    return checkResolve(res);
   });
 }
 
@@ -65,11 +58,7 @@ function deleteRequest(path, body) {
     headers: config.headers,
     body: JSON.stringify(body),
   }).then((res) => {
-    if (res.ok) {
-      return res.json();
-    } else {
-      return Promise.reject(`Что-то пошло не так: ${res.status}`);
-    }
+    return checkResolve(res);
   });
 }
 
