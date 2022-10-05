@@ -1,4 +1,4 @@
-// import "../pages/index.css";
+import "../pages/index.css";
 import { makeNewCard } from "./card.js";
 import { validationOptions } from "./data.js";
 import {
