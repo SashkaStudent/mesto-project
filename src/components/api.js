@@ -7,11 +7,7 @@ const config = {
 };
 
 function checkResolve(resolve) {
-  if (resolve.ok) {
-    return resolve.json();
-  } else {
-    return Promise.reject(`Что-то пошло не так: ${resolve.status}`);
-  }
+  return resolve.ok ? resolve.json(): Promise.reject(`Что-то пошло не так: ${resolve.status}`);
 }
 
 function getRequest(path) {
