@@ -1,3 +1,13 @@
+class Api {
+  constructor(){
+    
+  }
+}
+//Саша
+//
+// Student
+
+//123
 const config = {
   baseUrl: "https://nomoreparties.co/v1/plus-cohort-15",
   headers: {
