@@ -1,6 +1,6 @@
 // import "../pages/index.css";
 import { makeNewCard } from "./card.js";
-import { validationOptions } from "./data.js";
+import { apiConfig, validationOptions } from "./data.js";
 import {
   closePopup,
   imageWindow,
@@ -12,6 +12,7 @@ import {
 } from "./modal.js";
 import { enableValidation, resetPopupValidation } from "./validation.js";
 import {
+  Api,
   deleteCard,
   deleteLike,
   getCards,
@@ -33,6 +34,15 @@ const profile = {
   editButtonNode: document.querySelector("#editProfileButton"),
   newItemButtonNode: document.querySelector("#addNewItemButton"),
 };
+
+const api = new Api(apiConfig);
+api.getCards().then((cards)=>{
+  console.log(cards);
+});
+
+
+
+
 
 getProfile().then(initProfile).then(initCards).catch(err=>{console.error(`Не удалось загрузить профиль. ${err}`)});
 
