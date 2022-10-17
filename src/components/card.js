@@ -1,5 +1,7 @@
 const cardTemplate = document.querySelector("#elementTemplate").content;
 
+// Хэндлы handleLike, handleUnlike, handleDeleteCard принимаются в конструкторе?
+
 export class Card {
   constructor(
     { _id, name, likes, link, owner },
