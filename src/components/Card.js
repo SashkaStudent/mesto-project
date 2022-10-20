@@ -1,7 +1,3 @@
-const cardTemplate = document.querySelector("#elementTemplate").content;
-
-// Хэндлы handleLike, handleUnlike, handleDeleteCard принимаются в конструкторе?
-
 export class Card {
   constructor(
     { _id, name, likes, link, owner },
@@ -18,7 +14,7 @@ export class Card {
     this._likes = likes;
     this._owner = owner;
     this._selector = selector;
-
+    console.log(likes);
     this._profileId = profileId;
 
     this._handleLike = handleLike(_id);
@@ -34,7 +30,7 @@ export class Card {
       .cloneNode(true);
   }
 
-  generatorElement() {
+  generateElement() {
     const element = this._createElement();
 
     const name = element.querySelector(".element__title");
@@ -50,8 +46,9 @@ export class Card {
     likesCount.textContent = this._likes.length;
 
     const like = likeContainer.querySelector(".element__like-button");
-    if (this._likes.some((like) => like.owner._id === this._profileId))
-      like.classList.add("element__like-button_active");
+
+    if (this._likes.some((l) => { l._id === this._profileId; })) //Ошибка была здесь в some передавали like, который объявлен выше
+      like.classList.add("element__like-button_active");         // У лайка нет поля owner, но есть _id
 
     const deleteButton = element.querySelector(".element__delete-button");
     if (this._owner._id !== this._profileId)
@@ -63,49 +60,19 @@ export class Card {
   }
 
   _setEventListeners(image, like, deleteButton) {
-    image.setEventListeners("click", () => {
+    // Здесь вместо addEventListener был setEventListeners
+    image.addEventListener("click", () => {
       this._handleCardClick();
     });
 
-    like.setEventListeners("click", () => {
+    like.addEventListener("click", () => {
       like.classList.contains("element__like-button_active")
         ? this._handleUnlike()
         : this._handleLike();
     });
 
-    deleteButton.setEventListeners("click", () => {
+    deleteButton.addEventListener("click", () => {
       this._handleDeleteCard();
     });
   }
 }
-
-export const makeNewCard = (
-  card,
-  profileId,
-  imageClickCallback,
-  likeClickCallback,
-  deleteClickCallback
-) => {
-  const cardElement = cardTemplate.querySelector(".element").cloneNode(true);
-  cardElement.dataset.cardId = card._id;
-  const elementImage = cardElement.querySelector(".element__image");
-  elementImage.src = card.link;
-  elementImage.alt = card.name;
-  elementImage.addEventListener("click", imageClickCallback);
-
-  cardElement.querySelector(".element__title").textContent = card.name;
-  cardElement.querySelector(".element__likes-count").textContent =
-    card.likes.length;
-
-  const deleteButton = cardElement.querySelector(".element__delete-button");
-  const likeButton = cardElement.querySelector(".element__like-button");
-  likeButton.addEventListener("click", likeClickCallback);
-  const liked = card.likes.some((like) => {
-    return like._id === profileId;
-  });
-  if (liked) likeButton.classList.add("element__like-button_active");
-  if (card.owner._id !== profileId)
-    deleteButton.classList.add("element__delete-button_disabled");
-  else deleteButton.addEventListener("click", deleteClickCallback);
-  return cardElement;
-};

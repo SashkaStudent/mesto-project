@@ -1,5 +1,5 @@
 // import "../pages/index.css";
-import { makeNewCard } from "./card.js";
+//import { makeNewCard } from "./card.js";
 import { apiConfig, validationOptions } from "./data.js";
 import {
   closePopup,
@@ -11,43 +11,9 @@ import {
   changeButtonContent,
 } from "./modal.js";
 import { enableValidation, resetPopupValidation } from "./validation.js";
-import {
-  Api,
-  deleteCard,
-  deleteLike,
-  getCards,
-  getProfile,
-  postCard,
-  putLike,
-  setAvatar,
-  setProfile,
-} from "./api.js";
-
-const elementsList = document.querySelector(".elements__list");
-
-const profile = {
-  data: {},
-  nameNode: document.querySelector(".profile__name"),
-  avatarNode: document.querySelector(".profile__avatar-container"),
-  avatarImageNode: document.querySelector(".profile__avatar"),
-  employmentNode: document.querySelector(".profile__employment"),
-  editButtonNode: document.querySelector("#editProfileButton"),
-  newItemButtonNode: document.querySelector("#addNewItemButton"),
-};
-
-const api = new Api(apiConfig);
-api.getCards().then((cards)=>{
-  console.log(cards);
-});
-
-
-
-
-
-getProfile().then(initProfile).then(initCards).catch(err=>{console.error(`Не удалось загрузить профиль. ${err}`)});
 
 function initProfile() {
-  getProfile().then((profileData=>{
+  getProfile().then((profileData => {
     profile.data = profileData;
     profile.nameNode.textContent = profileData.name;
     profile.employmentNode.textContent = profileData.about;
@@ -55,22 +21,22 @@ function initProfile() {
   }))
 }
 
-function initCards() {
-  getCards().then((cards) => {
-    cards.forEach((card) => {
-      const cardElement = makeNewCard(
-        card,
-        profile.data._id,
-        handleImageClick,
-        handleLikeClick,
-        handleDeleteElement
-      );
-      elementsList.append(cardElement);
-    });
-  }).catch(err=>{
-    console.error(`Не удалось загрузить карточки. ${err}`)
-  });
-}
+//  function initCards() {
+//   getCards().then((cards) => {
+//     cards.forEach((card) => {
+//       const cardElement = makeNewCard(
+//         card,
+//         profile.data._id,
+//         handleImageClick,
+//         handleLikeClick,
+//         handleDeleteElement
+//       );
+//       elementsList.append(cardElement);
+//     });
+//   }).catch(err => {
+//     console.error(`Не удалось загрузить карточки. ${err}`)
+//   });
+// }
 
 profile.editButtonNode.addEventListener("click", handleEditProfileClick);
 profile.newItemButtonNode.addEventListener("click", handleNewItemClick);
