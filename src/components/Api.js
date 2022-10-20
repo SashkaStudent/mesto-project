@@ -1,5 +1,5 @@
 
-export class Api {
+export default class Api {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
@@ -66,6 +66,7 @@ export class Api {
   }
 
   likeCard(cardId) {
+    console.log(`${this._baseUrl}/cards/likes/${cardId}`);
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
       headers: this._headers,
@@ -82,12 +83,4 @@ export class Api {
       .then(this._handleRes);
   }
 }
-
-const config = {
-  baseUrl: "https://nomoreparties.co/v1/plus-cohort-15",
-  headers: {
-    authorization: "e1c7a508-b41b-4183-8776-1689fa2e2758",
-    "Content-Type": "application/json",
-  },
-};
 

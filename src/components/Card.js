@@ -1,4 +1,4 @@
-export class Card {
+export default class Card {
   constructor(
     { _id, name, likes, link, owner },
     selector,
@@ -14,10 +14,8 @@ export class Card {
     this._likes = likes;
     this._owner = owner;
     this._selector = selector;
-    console.log(likes);
     this._profileId = profileId;
-
-    this._handleLike = handleLike(_id);
+    this._handleLike = handleLike;//(_id);
     this._handleUnlike = handleUnlike(_id);
     this._handleCardClick = handleCardClick(name, link);
     this._handleDeleteCard = handleDeleteCard(_id);
@@ -68,7 +66,7 @@ export class Card {
     like.addEventListener("click", () => {
       like.classList.contains("element__like-button_active")
         ? this._handleUnlike()
-        : this._handleLike();
+        : this._handleLike(this._id);
     });
 
     deleteButton.addEventListener("click", () => {
