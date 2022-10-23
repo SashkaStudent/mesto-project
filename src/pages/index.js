@@ -1,9 +1,10 @@
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import Api from "../components/Api.js";
-import { apiConfig, popupImageSelector } from "../components/constants.js";
+import { apiConfig, popupImageSelector, userInfoSelectors } from "../components/constants.js";
 import { handleError } from "../components/utils.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
+import UserInfo from "../components/UserInfo.js";
 
 // const profile = {
 //   data: {},
@@ -17,6 +18,8 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 const api = new Api(apiConfig);
 const imagePopup = new PopupWithImage(popupImageSelector);
 imagePopup.setEventListeners();
+
+const userInfo = new UserInfo(userInfoSelectors);
 // api.getProfile().then((profile) => { console.log(profile) });
 // "c760c75db1ab96b55fc75d1e"
 

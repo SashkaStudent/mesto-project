@@ -18,3 +18,9 @@ export const validationOptions = {
 };
 
 export const popupImageSelector = "#popupImage";
+
+export const userInfoSelectors = {
+ avatarSelector: ".profile__avatar",
+  nameSelector: ".profile__name",
+  aboutSelector: ".profile__employment"
+}
