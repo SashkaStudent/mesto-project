@@ -5,8 +5,15 @@ export default class Section {
     this._renderer = renderer;
   }
 
-  addItem(itemElement) { // Переименовали item в itemElement
+  addItem(itemElement) {
+    // Переименовали item в itemElement
     this._section.prepend(itemElement);
+  }
+
+  removeItem(elementForDelete) {
+    this._items.remove(elementForDelete);
+    elementForDelete.remove();
+    // = this._items.filter(element => element !== ele)
   }
 
   renderItems() {
@@ -15,6 +22,5 @@ export default class Section {
       // console.log(item);
       //this.addItem(cardElement);
     });
-
-  };
+  }
 }

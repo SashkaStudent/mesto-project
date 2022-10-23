@@ -16,3 +16,5 @@ export const validationOptions = {
   errorClass: "popup__input-error_active",
   idSuffix: "Error",
 };
+
+export const popupImageSelector = "#popupImage";
