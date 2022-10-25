@@ -5,6 +5,7 @@ import { apiConfig, popupImageSelector, userInfoSelectors, cardSelector, cardLis
 import { handleError } from "../components/utils.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 // const profile = {
 //   data: {},
@@ -15,6 +16,8 @@ import UserInfo from "../components/UserInfo.js";
 //   editButtonNode: document.querySelector("#editProfileButton"),
 //   newItemButtonNode: document.querySelector("#addNewItemButton"),
 // };
+
+
 const api = new Api(apiConfig);
 const imagePopup = new PopupWithImage(popupImageSelector);
 imagePopup.setEventListeners();
@@ -28,7 +31,9 @@ const userInfo = new UserInfo(userInfoSelectors,
 Promise.all([userInfo.getUserInfo(), api.getCards()]).then(([user, cards]) => {
   const cardList = new Section(
     {
-      items: cards,
+      items: (cards.sort((prevCard, curCard) =>
+        prevCard.createdAt > curCard.createdAt ? 1 : -1
+      )),
       renderer: (item) => {
         const card = new Card(
           item,
@@ -62,13 +67,29 @@ Promise.all([userInfo.getUserInfo(), api.getCards()]).then(([user, cards]) => {
           },
           user._id
         );
+
         cardList.addItem(card.generateElement());
       },
     },
-    cardListSelector // Файл constants.js
+    cardListSelector
   );
   cardList.renderItems();
-}).catch(handleError)
+
+  const newCardPopup = new PopupWithForm({
+    popupFormSelector: "#popupNewItem",
+    formSelector: ".popup__form",
+    submitButtonSelector: ".popup__submit-button",
+    inputsSelector: ".popup__input"
+  },
+    (cardInfo) => {
+      return (api.addNewCard(cardInfo)).then(newCard => {
+        cardList.renderNewItem(newCard);
+      }).catch(handleError)
+    });
+  document.querySelector(".profile__add-button").addEventListener("click", () => { newCardPopup.open() });
+  newCardPopup.setEventListeners();
+})
+  .catch(handleError);
 
 // api.getProfile().then((profile) => { console.log(profile) });
 // "c760c75db1ab96b55fc75d1e"
@@ -77,10 +98,6 @@ Promise.all([userInfo.getUserInfo(), api.getCards()]).then(([user, cards]) => {
 //   name: "Для удаления",
 //   link: "https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg",
 // });
-
-api.getCards().then((cards) => {
-
-});
 
 //getProfile().then(initProfile);
 //.then(initCards).catch(err => { console.error(`Не удалось загрузить профиль. ${err}`) });

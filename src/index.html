@@ -85,15 +85,15 @@
       <form name="newItemForm" class="popup__form" novalidate>
         <fieldset class="popup__fieldset">
           <label class="popup__field">
-            <input type="text" name="inputNewItemName" id="inputNewItemName" placeholder="Название" class="popup__input"
+            <input type="text" name="name" id="inputNewItemName" placeholder="Название" class="popup__input"
               minlength="2" maxlength="30" pattern="^[a-zA-Zа-яА-Я -]+$"
               data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
               required />
             <span class="popup__input-error" id="inputNewItemNameError"></span>
           </label>
           <label class="popup__field">
-            <input type="url" name="inputNewItemLink" id="inputNewItemLink" placeholder="Ссылка на картинку"
-              class="popup__input" required />
+            <input type="url" name="link" id="inputNewItemLink" placeholder="Ссылка на картинку" class="popup__input"
+              required />
             <span class="popup__input-error" id="inputNewItemLinkError"></span>
           </label>
           <button type="submit" class="popup__submit-button" id="submitNewItemButton" aria-label="Сохранить изменения.">

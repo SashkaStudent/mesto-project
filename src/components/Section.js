@@ -5,6 +5,10 @@ export default class Section {
     this._renderer = renderer;
   }
 
+  renderNewItem(item) {
+    this._renderer(item);
+  }
+
   addItem(itemElement) {
     // Переименовали item в itemElement
     this._section.prepend(itemElement);
