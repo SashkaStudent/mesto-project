@@ -17,10 +17,14 @@ export const validationOptions = {
   idSuffix: "Error",
 };
 
+export const cardSelector = ".element";
+
+export const cardListSelector = ".elements__list";
+
 export const popupImageSelector = "#popupImage";
 
 export const userInfoSelectors = {
- avatarSelector: ".profile__avatar",
+  avatarSelector: ".profile__avatar",
   nameSelector: ".profile__name",
   aboutSelector: ".profile__employment"
 }
