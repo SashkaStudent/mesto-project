@@ -58,14 +58,14 @@
       <form name="editProfileForm" class="popup__form" novalidate>
         <fieldset class="popup__fieldset">
           <label class="popup__field">
-            <input type="text" name="inputName" id="inputProfileName" placeholder="Имя" class="popup__input"
+            <input type="text" name="name" id="inputProfileName" placeholder="Имя" class="popup__input"
               minlength="3" maxlength="40" pattern="^[a-zA-Zа-яА-Я -]+$"
               data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
               required />
             <span class="popup__input-error" id="inputProfileNameError"></span>
           </label>
           <label class="popup__field">
-            <input type="text" name="inputEmployment" id="inputProfileEmployment" placeholder="Занятие"
+            <input type="text" name="about" id="inputProfileEmployment" placeholder="Занятие"
               class="popup__input" minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-Я -]+$"
               data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
               required />
@@ -124,7 +124,7 @@
       <form name="editAvatarForm" class="popup__form" novalidate>
         <fieldset class="popup__fieldset">
           <label class="popup__field">
-            <input type="url" name="inputAvatarLink" id="inputAvatarLink" placeholder="Ссылка на картинку"
+            <input type="url" name="link" id="inputAvatarLink" placeholder="Ссылка на картинку"
               class="popup__input" required />
             <span class="popup__input-error" id="inputAvatarLinkError"></span>
           </label>

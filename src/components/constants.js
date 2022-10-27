@@ -17,6 +17,15 @@ export const validationOptions = {
   idSuffix: "Error",
 };
 
+export const popupSelectors = {
+  newCard: "#popupNewItem",
+  editProfile: "#popupEditProfile",
+  editAvatar: "#popupEditAvatar",
+  form: ".popup__form",
+  input: ".popup__input",
+  submitButton: ".popup__submit-button",
+}
+
 export const cardSelector = ".element";
 
 export const cardListSelector = ".elements__list";
