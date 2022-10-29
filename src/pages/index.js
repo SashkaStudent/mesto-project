@@ -8,7 +8,7 @@
 // [ ] Поискать что можно вынести в константы во всех классах
 // [ ] 
 
-
+import "./index.css";
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
 import Api from "../components/Api.js";
