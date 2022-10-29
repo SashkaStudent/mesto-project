@@ -1,9 +1,9 @@
 // To do list:
 // [ ] Избавиться от чрезмерной вложенности в Promise.all
-// [ ] Настроить webpack, devserver в частности
+// [*] Настроить webpack, devserver в частности
 // [ ] Вынести проверку статуса ответа сервера в отдельную функцию 
 //     https://files.slack.com/files-pri/TPV9DP0N4-F048AQB7WM9/image.png
-// [ ] Убрать лишние файлы
+// [*] Убрать лишние файлы
 // [ ] Почистить от комментов
 // [ ] Поискать что можно вынести в константы во всех классах
 // [ ] 
@@ -26,16 +26,6 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import UserInfo from "../components/UserInfo.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import FormValidator from "../components/FormValidator.js";
-
-// const profile = {
-//   data: {},
-//   nameNode: document.querySelector(".profile__name"),
-//   avatarNode: document.querySelector(".profile__avatar-container"),
-//   avatarImageNode: document.querySelector(".profile__avatar"),
-//   employmentNode: document.querySelector(".profile__employment"),
-//   editButtonNode: document.querySelector("#editProfileButton"),
-//   newItemButtonNode: document.querySelector("#addNewItemButton"),
-// };
 
 const api = new Api(apiConfig);
 const imagePopup = new PopupWithImage(popupImageSelector);
@@ -173,14 +163,3 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
 
   })
   .catch(handleError);
-
-// api.getProfile().then((profile) => { console.log(profile) });
-// "c760c75db1ab96b55fc75d1e"
-
-// api.addNewCard({
-//   name: "Для удаления",
-//   link: "https://www.planetware.com/wpimages/2020/02/france-in-pictures-beautiful-places-to-photograph-eiffel-tower.jpg",
-// });
-
-//getProfile().then(initProfile);
-//.then(initCards).catch(err => { console.error(`Не удалось загрузить профиль. ${err}`) });

@@ -45,8 +45,6 @@ export default class Card {
     }
   }
 
-  //setLikeBox(likes, owner) {}
-
   generateElement() {
     this._createElement();
 
@@ -75,7 +73,6 @@ export default class Card {
     this._element.remove();
   }
   _setEventListeners(image, like, deleteButton) {
-    // Здесь вместо addEventListener был setEventListeners
     image.addEventListener("click", () => {
       this._handleCardClick();
     });

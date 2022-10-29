@@ -18,7 +18,7 @@ export class Popup {
       this.close();
     }
   }
-// Почему публичный?
+
   setEventListeners() {
     this._popup.addEventListener("click", (evt) => {
       if (

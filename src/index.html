@@ -2,10 +2,9 @@
 <html lang="ru">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--  <link rel="stylesheet" href="./pages/index.css">-->
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Место</title>
 </head>
 
@@ -13,11 +12,10 @@
 
   <header class="header">
     <img
-        src="<%=require('./images/mesto-logo.svg')%>"
-        alt="Логотип Место."
-        class="header__logo"
+      src="<%=require('./images/mesto-logo.svg')%>"
+      alt="Логотип Место."
+      class="header__logo"
     />
-<!--    <img src="./images/mesto-logo.svg" alt="Логотип Место." class="header__logo" />-->
   </header>
 
   <main class="page">
@@ -25,11 +23,10 @@
     <section class="profile">
       <button class="profile__avatar-container">
         <img
-            class="profile__avatar"
-            src="<%=require('./images/avatar.svg')%>"
-            alt="Аватар пользователя."
+          class="profile__avatar"
+          src="<%=require('./images/avatar.svg')%>"
+          alt="Аватар пользователя."
         />
-<!--        <img class="profile__avatar" src="./images/avatar.svg" alt="Аватар пользователя." />-->
       </button>
 
       <div class="profile__info">
@@ -53,22 +50,22 @@
   <div class="popup" id="popupEditProfile">
     <div class="popup__window">
       <button class="popup__close-button" id="closeProfileButton" type="button"
-        aria-label="Закрыть окно редактирования."></button>
+              aria-label="Закрыть окно редактирования."></button>
       <h2 class="popup__title">Редактировать профиль</h2>
       <form name="editProfileForm" class="popup__form" novalidate>
         <fieldset class="popup__fieldset">
           <label class="popup__field">
             <input type="text" name="name" id="inputProfileName" placeholder="Имя" class="popup__input"
-              minlength="3" maxlength="40" pattern="^[a-zA-Zа-яА-Я -]+$"
-              data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
-              required />
+                   minlength="3" maxlength="40" pattern="^[a-zA-Zа-яА-Я -]+$"
+                   data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                   required/>
             <span class="popup__input-error" id="inputProfileNameError"></span>
           </label>
           <label class="popup__field">
             <input type="text" name="about" id="inputProfileEmployment" placeholder="Занятие"
-              class="popup__input" minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-Я -]+$"
-              data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
-              required />
+                   class="popup__input" minlength="2" maxlength="200" pattern="^[a-zA-Zа-яА-Я -]+$"
+                   data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                   required/>
             <span class="popup__input-error" id="inputProfileEmploymentError"></span>
           </label>
           <button type="submit" class="popup__submit-button" id="submitProfileButton" aria-label="Сохранить изменения.">
@@ -78,6 +75,7 @@
       </form>
     </div>
   </div>
+
   <div class="popup" id="popupNewItem">
     <div class="popup__window">
       <button class="popup__close-button" id="closeNewItemButton" type="button" aria-label="Закрыть окно."></button>
@@ -86,14 +84,14 @@
         <fieldset class="popup__fieldset">
           <label class="popup__field">
             <input type="text" name="name" id="inputNewItemName" placeholder="Название" class="popup__input"
-              minlength="2" maxlength="30" pattern="^[a-zA-Zа-яА-Я -]+$"
-              data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
-              required />
+                   minlength="2" maxlength="30" pattern="^[a-zA-Zа-яА-Я -]+$"
+                   data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+                   required/>
             <span class="popup__input-error" id="inputNewItemNameError"></span>
           </label>
           <label class="popup__field">
             <input type="url" name="link" id="inputNewItemLink" placeholder="Ссылка на картинку" class="popup__input"
-              required />
+                   required/>
             <span class="popup__input-error" id="inputNewItemLinkError"></span>
           </label>
           <button type="submit" class="popup__submit-button" id="submitNewItemButton" aria-label="Сохранить изменения.">
@@ -108,11 +106,10 @@
     <figure class="popup__figure">
       <button class="popup__close-button" id="closeImageButton" type="button" aria-label="Закрыть окно."></button>
       <img
-          class="popup__figure-image"
-          src=""
-          alt=""
+        class="popup__figure-image"
+        src=""
+        alt=""
       />
-<!--      <img class="popup__figure-image" src="./images/elements/altai.png" alt="Алтай" />-->
       <figcaption class="popup__figure-caption"></figcaption>
     </figure>
   </div>
@@ -125,11 +122,11 @@
         <fieldset class="popup__fieldset">
           <label class="popup__field">
             <input type="url" name="link" id="inputAvatarLink" placeholder="Ссылка на картинку"
-              class="popup__input" required />
+                   class="popup__input" required/>
             <span class="popup__input-error" id="inputAvatarLinkError"></span>
           </label>
           <button type="submit" class="popup__submit-button" id="submitEditAvatarButton"
-            aria-label="Сохранить изменения.">
+                  aria-label="Сохранить изменения.">
             Сохранить
           </button>
         </fieldset>
@@ -140,7 +137,7 @@
   <template id="elementTemplate">
     <li class="element">
       <button class="element__delete-button" area-label="Удалить"></button>
-      <img src="" alt="" class="element__image" />
+      <img src="" alt="" class="element__image"/>
       <div class="element__title-container">
         <h2 class="element__title"></h2>
         <div class="element__like-container">
@@ -150,7 +147,6 @@
       </div>
     </li>
   </template>
-<!--  <script type="module" src="./pages/index.js"></script>-->
 
 </body>
 
