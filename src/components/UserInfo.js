@@ -26,6 +26,11 @@ export default class UserInfo {
     })
   }
 
+  getUserInfoFromElements() {
+
+    return { name: this._nameElement.textContent, about: this._aboutElement.textContent };
+  }
+
   setUserInfo({ name, about }) {
     return (this._setUserFromApi({ name, about })).then(userData => {
       this._setUserOnPage(userData);

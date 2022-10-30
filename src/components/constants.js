@@ -37,3 +37,5 @@ export const userInfoSelectors = {
   nameSelector: ".profile__name",
   aboutSelector: ".profile__employment"
 }
+
+export const popupOpenClassname = "popup_opened";

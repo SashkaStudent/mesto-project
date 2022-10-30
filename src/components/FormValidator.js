@@ -3,13 +3,10 @@ export default class FormValidator {
     {
       inputSelector,
       submitButtonSelector,
-      inactiveButtonClass, // класс делающий вид кнопки неактивным
-      inputErrorClass, // добавляет инпуту красную рамку "popup__input_type_error"
-      errorClass, // класс включает отображение элемента с сообщением ошибки "popup__input-error_active"
-      idSuffix, //id элемента с сообщением ошибки формируется из id инпута + Error
-      //  <input id="inputNewItemLink" ...
-      //    <span id="inputNewItemLinkError" ..
-      // Таким образом: errorElement = formElement.querySelector(`#${inputElement.id}${this._idSuffix}`);
+      inactiveButtonClass,
+      inputErrorClass,
+      errorClass,
+      idSuffix,
     },
     formElement
   ) {
@@ -94,9 +91,9 @@ export default class FormValidator {
   }
 
   _resetPopupValidation() {
-    this._toggleButtonState();
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
+    this._toggleButtonState();
   }
 }

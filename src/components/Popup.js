@@ -1,19 +1,21 @@
+import { popupOpenClassname } from "./constants";
+
 export class Popup {
   constructor(selector) {
     this._popup = document.querySelector(selector);
   }
 
   open() {
-    this._popup.classList.add("popup_opened");
-      document.addEventListener("keydown", (evt) => { this._handleEscClose(evt) });
+    this._popup.classList.add(popupOpenClassname);
+    document.addEventListener("keydown", (evt) => { this._handleEscClose(evt) });
   }
 
   close() {
-    this._popup.classList.remove("popup_opened");
+    this._popup.classList.remove(popupOpenClassname);
     document.removeEventListener("keydown", (evt) => { this._handleEscClose(evt) });
   }
 
-    _handleEscClose(evt) {
+  _handleEscClose(evt) {
     if (evt.key === "Escape") {
       this.close();
     }

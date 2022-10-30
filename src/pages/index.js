@@ -1,13 +1,3 @@
-// To do list:
-// [ ] Избавиться от чрезмерной вложенности в Promise.all
-// [*] Настроить webpack, devserver в частности
-// [ ] Вынести проверку статуса ответа сервера в отдельную функцию 
-//     https://files.slack.com/files-pri/TPV9DP0N4-F048AQB7WM9/image.png
-// [*] Убрать лишние файлы
-// [ ] Почистить от комментов
-// [ ] Поискать что можно вынести в константы во всех классах
-// [ ] 
-
 import "./index.css";
 import Section from "../components/Section.js";
 import Card from "../components/Card.js";
@@ -44,52 +34,64 @@ const userInfo = new UserInfo(
   }
 );
 
+const makeCard = (item, userId) => {
+  const card = new Card(
+    item,
+    cardSelector,
+    () => {
+      api
+        .likeCard(item._id)
+        .then((newCard) => {
+          card.setLikeBox(newCard.likes);
+        })
+        .catch(handleError);
+    },
+    () => {
+      api
+        .unlikeCard(item._id)
+        .then((newCard) => {
+          card.setLikeBox(newCard.likes);
+        })
+        .catch(handleError);
+    },
+    () => {
+      imagePopup.open(item);
+    },
+    () => {
+      api
+        .deleteCard(item._id)
+        .then(() => {
+          card.removeElement();
+        })
+        .catch(handleError);
+    },
+    userId
+  );
+  return card;
+}
+
+const makeSection = (cards, userId) => {
+  const cardList = new Section(
+    {
+      items: cards,
+      renderer: (item) => {
+        const card = makeCard(item, userId);
+        cardList.addItem(card.generateElement());
+      },
+    },
+    cardListSelector
+  );
+  return cardList;
+}
+
 Promise.all([userInfo.getUserInfo(), api.getCards()])
   .then(([user, cards]) => {
-    const cardList = new Section(
-      {
-        items: cards.sort((prevCard, curCard) =>
-          prevCard.createdAt > curCard.createdAt ? 1 : -1
-        ),
-        renderer: (item) => {
-          const card = new Card(
-            item,
-            cardSelector,
-            () => {
-              api
-                .likeCard(item._id)
-                .then((newCard) => {
-                  card.setLikeBox(newCard.likes);
-                })
-                .catch(handleError);
-            },
-            () => {
-              api
-                .unlikeCard(item._id)
-                .then((newCard) => {
-                  card.setLikeBox(newCard.likes);
-                })
-                .catch(handleError);
-            },
-            () => {
-              imagePopup.open(item);
-            },
-            () => {
-              api
-                .deleteCard(item._id)
-                .then(() => {
-                  card.removeElement();
-                })
-                .catch(handleError);
-            },
-            user._id
-          );
 
-          cardList.addItem(card.generateElement());
-        },
-      },
-      cardListSelector
+    const sortedCards = cards.sort((prevCard, curCard) =>
+      prevCard.createdAt > curCard.createdAt ? 1 : -1
     );
+
+    const cardList = makeSection(sortedCards, user._id);
     cardList.renderItems();
 
     const newCardPopup = new PopupWithForm(
@@ -105,9 +107,9 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
           .then((newCard) => {
             cardList.renderNewItem(newCard);
           })
-          .catch(handleError).finally(()=>{
+          .catch(handleError).finally(() => {
           });
-      }, {actionText:'Создать', inProgressText: 'Создание...'}
+      }, 'Создание...'
     );
 
     const editProfilePopup = new PopupWithForm(
@@ -119,7 +121,10 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
       },
       (profileInfo) => {
         return userInfo.setUserInfo(profileInfo)
-      }, {actionText:'Сохранить', inProgressText: 'Сохранение...'}
+      }, 'Сохранение...',
+      () => {
+        editProfilePopup.setInputsValues(userInfo.getUserInfoFromElements())
+      }
     );
 
     const avatarEditPopup = new PopupWithForm(
@@ -131,7 +136,7 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
       },
       (profileInfo) => {
         return userInfo.updateAvatar(profileInfo.link);
-      }, {actionText:'Сохранить', inProgressText: 'Сохранение...'}
+      }, 'Сохранение...'
     );
 
     document
@@ -159,7 +164,5 @@ Promise.all([userInfo.getUserInfo(), api.getCards()])
     newCardValidator.enableValidation();
     const avatarValidator = new FormValidator(validationOptions, avatarEditPopup.getFormElement());
     avatarValidator.enableValidation();
-
-
   })
   .catch(handleError);
