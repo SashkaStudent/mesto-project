@@ -89,6 +89,7 @@ const newCardPopup = new PopupWithForm(
       .addNewCard(cardInfo)
       .then((newCard) => {
         cardList.renderNewItem(newCard);
+        newCardPopup.close();
       })
       .catch(handleError)
       .finally(() => newCardPopup.onResponseEnd())
