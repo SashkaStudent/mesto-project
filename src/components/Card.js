@@ -29,19 +29,11 @@ export default class Card {
   }
 
   setLikeBox(likes) {
-    const likeContainer = this._element.querySelector(
-      ".element__like-container"
-    );
-
-    const likesCount = likeContainer.querySelector(".element__likes-count");
-    likesCount.textContent = likes.length;
-
-    const like = likeContainer.querySelector(".element__like-button");
-
+    this._likesCount.textContent = likes.length;
     if (likes.some((likeItem) => likeItem._id === this._profileId)) {
-      like.classList.add("element__like-button_active"); // У лайка нет поля owner, но есть _id
+      this._like.classList.add("element__like-button_active"); // У лайка нет поля owner, но есть _id
     } else {
-      like.classList.remove("element__like-button_active");
+      this._like.classList.remove("element__like-button_active");
     }
   }
 
@@ -55,23 +47,27 @@ export default class Card {
     image.src = this._link;
     image.alt = this._name;
 
-    this.setLikeBox(this._likes);
-    const likeContainer = this._element.querySelector(
+    this._likeContainer = this._element.querySelector(
       ".element__like-container"
     );
-    const like = likeContainer.querySelector(".element__like-button");
+    this._likesCount = this._likeContainer.querySelector(".element__likes-count");
+    this._like = this._likeContainer.querySelector(".element__like-button");
+    this.setLikeBox(this._likes);
 
-    const deleteButton = this._element.querySelector(".element__delete-button");
+    this._deleteButton = this._element.querySelector(".element__delete-button");
     if (this._owner._id !== this._profileId)
-      deleteButton.classList.add("element__delete-button_disabled");
+      this._deleteButton.classList.add("element__delete-button_disabled");
 
-    this._setEventListeners(image, like, deleteButton);
+    this._setEventListeners(image, this._like, this._deleteButton);
 
     return this._element;
   }
+
   removeElement() {
     this._element.remove();
+    this._element = null;
   }
+  
   _setEventListeners(image, like, deleteButton) {
     image.addEventListener("click", () => {
       this._handleCardClick();

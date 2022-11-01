@@ -12,6 +12,7 @@ export default class PopupWithForm extends Popup {
     this._inputs = this._formElement.querySelectorAll(inputsSelector);
     this._handleFormSubmit = handleFormSubmit;
     this._submitButton = this._formElement.querySelector(submitButtonSelector);
+    this._startText = this._submitButton.textContent;
     this._inProgressText = inProgressText;
     this._onOpenHandler = onOpenHandler;
   }
@@ -35,9 +36,9 @@ export default class PopupWithForm extends Popup {
     const inputs = Array.from(this._inputs);
     const names = Object.keys(values);
 
-    inputs.forEach(input => {
+    inputs.forEach((input) => {
       if (names.includes(input.name)) input.value = values[input.name];
-    })
+    });
   }
 
   _getInputValues() {
@@ -47,22 +48,16 @@ export default class PopupWithForm extends Popup {
     }, {});
   }
 
-  _setButtonText(text) {
-    this._submitButton.textContent = text;
+  onResponseEnd() {
+    this._submitButton.textContent = this._startText;
   }
 
   setEventListeners() {
     this._formElement.addEventListener("submit", (e) => {
       e.preventDefault();
-
-      const prevSubmitText = this._submitButton.textContent;
-
-      this._setButtonText(this._inProgressText); //Меняем контент кнопки
-      this._handleFormSubmit(this._getInputValues())
-        .then(() => this.close())
-        .finally(() => {
-          this._setButtonText(prevSubmitText); //Меняем контент кнопки 
-        });
+      console.log(this);
+      this._submitButton.textContent = this._inProgressText;
+      this._handleFormSubmit(this._getInputValues());
     });
     super.setEventListeners();
   }
