@@ -20,4 +20,8 @@ export default class UserInfo {
       avatar: this._avatarElement.src,
     };
   }
+
+  getUserId() {
+    return this._id;
+  }
 }

@@ -23,18 +23,6 @@ const userInfo = new UserInfo(userInfoSelectors);
 const imagePopup = new PopupWithImage(popupImageSelector);
 imagePopup.setEventListeners();
 
-// const userInfo = new UserInfo(
-//   userInfoSelectors,
-//   () => {
-//     return api.getProfile();
-//   },
-//   (user) => {
-//     return api.setProfile(user);
-//   },
-//   (linkAvatar) => {
-//     return api.updateAvatar(linkAvatar);
-//   }
-// );
 
 const makeCard = (item, userId) => {
   const card = new Card(
@@ -73,7 +61,7 @@ const makeCard = (item, userId) => {
 };
 
 const cardList = new Section((item) => {
-  const card = makeCard(item, userInfo.getUserInfo()._id);
+  const card = makeCard(item, userInfo.getUserId());
   cardList.addItem(card.generateElement());
 }, cardListSelector);
 
